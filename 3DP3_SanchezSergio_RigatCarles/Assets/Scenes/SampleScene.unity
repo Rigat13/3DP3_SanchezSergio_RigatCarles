@@ -525,15 +525,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   offsetCollision: 1
-  collisionAngles:
-  - 10
-  - 20
-  - -10
-  - -20
-  - 40
-  - 60
-  - -40
-  - -60
+  rightAngles:
+  - 30
+  - 50
+  leftAngles:
+  - -30
+  - -50
   otherAngleWeight: 0.8
   collisionAngleDistance: 10
 --- !u!1001 &1608375768

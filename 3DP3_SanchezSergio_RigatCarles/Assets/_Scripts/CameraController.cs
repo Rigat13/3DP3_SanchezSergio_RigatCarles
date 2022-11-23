@@ -109,30 +109,35 @@ public class CameraController : MonoBehaviour
 
 	Vector3 checkCollisionsAndGetCorrectedDistance(Vector3 l_Direction, float l_Distance, Vector3 l_DesiredPosition)
 	{
-		RaycastHit l_RaycastHit;
-		Ray l_Ray = new Ray(m_LookAt.position, -l_Direction);
+		//RaycastHit l_RaycastHit;
+		//Ray l_Ray = new Ray(m_LookAt.position, -l_Direction);
 		//if (Physics.Raycast(l_Ray, out l_RaycastHit, l_Distance, layerMask))  // CENTRAL RAY?
 		//{
 		//	return l_RaycastHit.point + l_Direction * offsetCollision;
 		//}
-
+		Vector3 new_DesiredPosition = Vector3.zero;
 
 		List<Vector3> rightDesiredPositions = getDesiredPositions(rightAngles, l_Direction, l_DesiredPosition);
 		List<Vector3> leftDesiredPositions = getDesiredPositions(leftAngles, l_Direction, l_DesiredPosition);
 		// do average
 		// check which one is larger
 		// interpolate
+
+		return new_DesiredPosition;
 	}
 
 	List<Vector3> getDesiredPositions(List<float> angles, Vector3 l_Direction, Vector3 l_DesiredPosition)
 	{
+		RaycastHit l_RaycastHit;
+		Ray l_Ray = new Ray(m_LookAt.position, -l_Direction);
+
 		List<Vector3> desiredPositions = new List<Vector3>();
 		foreach (float angleRay in rightAngles)
 		{
 			l_Ray = new Ray (m_LookAt.position, Quaternion.AngleAxis(angleRay, Vector3.up) * -l_Direction);
 			if (Physics.Raycast(l_Ray, out l_RaycastHit, collisionAngleDistance, layerMask))
 			{
-				desiredPositions.Add(Vector3.Lerp(l_DesiredPosition, l_RaycastHit.point + l_Direction * offsetCollision));
+				desiredPositions.Add(Vector3.Lerp(l_DesiredPosition, l_RaycastHit.point + l_Direction * offsetCollision, otherAngleWeight));
 			}
 		}
 		return desiredPositions;
